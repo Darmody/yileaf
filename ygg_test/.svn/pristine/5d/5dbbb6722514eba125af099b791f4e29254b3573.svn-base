@@ -1,0 +1,66 @@
+<div id="sinaNBAVideo-refreshContent"></div>
+
+
+
+	<script type="text/javascript">
+
+		$.ajax({
+
+        	type: "GET",
+       		url: "/api-auth/sinaNBA/video",
+       		
+          beforeSend: function(){
+          
+            $("#hupuToday-refreshContent").html('<br/><br/><br/><br/><center><a href="javascript:void(0);" class="btn bg-color-redLight txt-color-white"><i class="fa fa-dribbble fa-4x fa-spin"></i></a></center>');
+          },
+          
+       		success: function(data) {
+
+       			$("#sinaNBAVideo-refreshContent").html("");
+
+            var html = '<!-- widget body text--><div class="tab-content padding-10" >';
+
+            var i = 0;
+
+            for(var j = 0; j < 5; j++) {
+
+                if(j == 0) {
+
+                  html += '<div class="tab-pane fade in active" id="videoTab' + Number(j + 1) + '">' +
+                        '<div class="superbox">';
+                } else {
+
+                  html += '<div class="tab-pane fade in " id="videoTab' + Number(j + 1) + '">' +
+                        '<div class="superbox">';
+                }
+
+           	  for(; i < Number(data.count); i++) {
+
+                if(data.results[i].videoType != ('' + j) ) {
+
+                  break;
+                }
+
+                html += '<div class="superbox-list">' +
+                          '<a href="' + data.results[i].videoAddress + '" target="_blank" >' +
+                          '<img src="' + data.results[i].coverAddress + '" data-img="/static/smartAdmin/img/superbox/superbox-full-1.jpg" alt="' + data.results[i].videoName + '" title="' + data.results[i].videoName +'" class="superbox-img">' +
+                          '<font class="font-xs">' + data.results[i].videoName + '</font>' +
+                          '</img>' +
+                          '</a>' +
+                          '</div>';
+                          
+                      
+              }
+
+              html += '<div class="superbox-float"></div>' +
+                        '</div>' +
+                        '<!-- /SuperBox -->' +
+                      '</div>';
+            }
+
+            $("#sinaNBAVideo-refreshContent").html(html);
+
+       		}
+		});
+
+	</script>

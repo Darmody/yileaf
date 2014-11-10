@@ -1,0 +1,724 @@
+{% extends "v2/base.html" %}
+
+{% block css %}
+	<link type="text/css" rel="stylesheet" href="/static/web/css/hupuNBA/teamlogo.css" />
+{% endblock %}
+
+
+{% block content %}
+<!-- RIBBON -->
+			<div id="ribbon">
+
+				<span class="ribbon-button-alignment"> <span id="refresh" class="btn btn-ribbon" data-title="refresh"  rel="tooltip" data-placement="bottom" data-original-title="<i class='text-warning fa fa-warning'></i> 注意！这将会恢复界面的默认布局" data-html="true"><i class="fa fa-refresh"></i></span> </span>
+
+
+
+				<!-- breadcrumb -->
+				<ol class="breadcrumb">
+					<li>主面板</li>><li>篮球</li>
+				</ol>
+				<!-- end breadcrumb -->
+
+				<!-- You can also add more buttons to the
+				ribbon for further usability
+
+				Example below:
+
+				<span class="ribbon-button-alignment pull-right">
+				<span id="search" class="btn btn-ribbon hidden-xs" data-title="search"><i class="fa-grid"></i> Change Grid</span>
+				<span id="add" class="btn btn-ribbon hidden-xs" data-title="add"><i class="fa-plus"></i> Add</span>
+				<span id="search" class="btn btn-ribbon" data-title="search"><i class="fa-search"></i> <span class="hidden-mobile">Search</span></span>
+				</span> -->
+
+			</div>
+			<!-- END RIBBON -->
+
+			<!-- MAIN CONTENT -->
+			<div id="content">
+
+				<div class="row">
+					<div class="col-xs-12 col-sm-7 col-md-7 col-lg-4">
+						<h1 class="page-title txt-color-blueDark"><i class="fa-fw fa fa-dribbble"></i> 篮&nbsp;球 </h1>
+					</div>
+					<div class="col-xs-12 col-sm-5 col-md-5 col-lg-8">
+						<ul id="sparks" class="">
+							
+						</ul>
+					</div>
+				</div>
+				<!-- widget grid -->
+				<section id="widget-grid" class="">
+
+					<!-- row -->
+					<div class="row">
+						<article class="col-sm-12">
+							
+							<div class="well">
+
+								<h1 class="txt-color-redLight">
+									<img src="/static/web/img/hupuNBA/hupu.ico" style="width:16px;height:16px;"/>&nbsp;
+									<a href="http://nba.hupu.com" target="_blank" class="txt-color-redLight" >虎扑篮球</a>
+								</h1><br/><br/>
+								<blockquote>
+									<p>
+										虎扑NBA中文网，提供每日最新赛况，每日球员数据，以及虎扑最没节操的“湿乎乎的话题”模块也会实时更新哦。
+									</p>
+								</blockquote>
+							</div>
+								<div class="row">
+								<article class="col-lg-5">
+								<div class="row">
+								<article class="col-lg-12">	
+								<!-- Widget ID (each widget will need unique ID)-->
+								<div class="jarviswidget jarviswidget-color-redLight" id="wid-id-1" data-widget-load="/site/nba/ajax/hupuToday.html" data-widget-colorbutton="false"	data-widget-editbutton="false" data-widget-deletebutton="false">
+								
+									<header>
+										<span class="widget-icon"> <i class="fa fa-rss "></i> </span>
+										<h2>今日赛况</h2>
+									</header>
+				
+									<!-- widget div-->
+									<div>
+									
+										<!-- widget content -->
+										<div class="widget-body custom-scroll" style="height:290px; overflow-y: scroll;">
+											
+											{% for today in hupuToday %}
+									
+												<ul class="notification-body">
+									
+												<li>
+													<span class="padding-10">
+														<ul class="list-inline text-center">
+															<li><i class="{{ today.teamlogo1 }}"></i></li>
+															<li><a class="" href='{{ today.titleLink }}' target="_blank"> {{ today.title }} </a></li>
+															<li><i class="{{ today.teamlogo2 }}"></i></li>
+														</ul>
+														<ul class="list-inline text-center">
+															<li>
+																<h6 class="font-xs">
+																	<a href='{{ today.alertLink }}' class="pull-left" target="_blank">
+																		<i class="fa fa-fw fa-clock-o "></i>{{ today.alert }}
+																	</a>
+																</h6>
+															</li>
+														</ul>
+													</span>
+												</li>
+													
+												
+												</ul>
+								
+											{% endfor %}
+											
+										</div>
+										<!-- end widget content -->
+									
+									</div>
+									<!-- end widget div -->
+								
+								</div>
+								<!-- end widget -->
+								</article>
+								</div>
+
+								<div class="row">
+								<article class="col-sm-12">
+									<!-- Widget ID (each widget will need unique ID)-->
+							<div class="jarviswidget jarviswidget-color-redLight " id="wid-id-11" data-widget-colorbutton="false"	data-widget-editbutton="false" data-widget-deletebutton="false">
+								<!-- widget options:
+									usage: <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false">
+									
+									data-widget-colorbutton="false"	
+									data-widget-editbutton="false"
+									data-widget-togglebutton="false"
+									data-widget-deletebutton="false"
+									data-widget-fullscreenbutton="false"
+									data-widget-custombutton="false"
+									data-widget-collapsed="true" 
+									data-widget-sortable="false"
+									
+								-->
+								<header>
+									<span class="widget-icon"> <i class="fa fa-bar-chart-o "></i> </span>
+									<h2>数据</h2>	
+									
+									<ul id="widget-tab-1" class="nav nav-tabs pull-right ">
+				
+										<li class="active">
+				
+											<a data-toggle="tab" href="#west-tab"> <span class="hidden-mobile hidden-tablet"><b>西部</b></span> </a>
+				
+										</li>
+				
+										<li>
+											<a data-toggle="tab" href="#east-tab"> <span class="hidden-mobile hidden-tablet"><b>东部</b></span></a>
+										</li>
+										<li>
+											<a data-toggle="tab" href="#score-tab"> <span class="hidden-mobile hidden-tablet"><b>得分</b></span></a>
+										</li>
+										<li>
+											<a data-toggle="tab" href="#rebound-tab"> <span class="hidden-mobile hidden-tablet"><b>篮板</b></span></a>
+										</li>
+										<li>
+											<a data-toggle="tab" href="#assist-tab"> <span class="hidden-mobile hidden-tablet"><b>助攻</b></span></a>
+										</li>
+				
+									</ul>	
+									
+								</header>
+				
+								<!-- widget div-->
+								<div>
+									
+									<!-- widget edit box -->
+									<div class="jarviswidget-editbox">
+										<!-- This area used as dropdown edit box -->
+										
+									</div>
+									<!-- end widget edit box -->
+									
+									<!-- widget content -->
+									<div class="widget-body no-padding">
+				
+										<!-- widget body text-->
+										
+										<div class="tab-content padding-10 custom-scroll" style="height:290px; overflow-y: scroll;">
+										
+											<div class="tab-pane fade in active" id="west-tab" >
+												
+												<table class="table table-striped table-bordered table-hover" >
+												<thead>
+												<tr>
+													<th>排名</th>
+													<th>队名</th>
+													<th>胜</th>
+													<th>负</th>
+													<th>近况</th>
+													<th>胜场差</th>
+												</tr>
+												</thead>
+
+												<tbody>
+												{% for data in hupuData %}
+
+												{% if data.dataType == '20' %}
+												<tr>
+													<td>{{ data.rank }}</td>
+													<td>{{ data.teamName }}</td>
+													<td>{{ data.win }}</td>
+													<td>{{ data.lose }}</td>
+													<td>{{ data.streak }}</td>
+													<td>{{ data.difGames }}</td>
+												</tr>
+												{% endif %}
+
+												{% endfor %}
+												</tbody>
+ 												
+ 												</table>
+
+												
+											</div>
+											<div class="tab-pane fade" id="east-tab">
+												
+												<table class="table table-striped table-bordered table-hover">
+												<thead>
+												<tr>
+													<th>排名</th>
+													<th>队名</th>
+													<th>胜</th>
+													<th>负</th>
+													<th>近况</th>
+													<th>胜场差</th>
+												</tr>
+												</thead>
+
+												<tbody>
+												{% for data in hupuData %}
+
+												{% if data.dataType == '10' %}
+												<tr>
+													<td>{{ data.rank }}</td>
+													<td>{{ data.teamName }}</td>
+													<td>{{ data.win }}</td>
+													<td>{{ data.lose }}</td>
+													<td>{{ data.streak }}</td>
+													<td>{{ data.difGames }}</td>
+												</tr>
+												{% endif %}
+
+												{% endfor %}
+												</tbody>
+ 												
+ 												</table>
+												
+											</div>
+											<div class="tab-pane fade" id="score-tab">
+												
+												<table class="table table-striped table-bordered table-hover">
+												<thead>
+												<tr>
+													<th>名次</th>
+													<th>姓名</th>
+													<th>球队</th>
+													<th>得分</th>
+												</tr>
+												</thead>
+
+												<tbody>
+												{% for data in hupuData %}
+
+												{% if data.dataType == '30' %}
+												<tr>
+													<td>{{ data.rank }}</td>
+													<td>{{ data.name }}</td>
+													<td>{{ data.teamName }}</td>
+													<td>{{ data.win }}</td>
+												</tr>
+												{% endif %}
+
+												{% endfor %}
+												</tbody>
+ 												
+ 												</table>
+												
+											</div>
+											<div class="tab-pane fade" id="rebound-tab">
+												
+												<table class="table table-striped table-bordered table-hover">
+												<thead>
+												<tr>
+													<th>名次</th>
+													<th>姓名</th>
+													<th>球队</th>
+													<th>篮板</th>
+												</tr>
+												</thead>
+
+												<tbody>
+												{% for data in hupuData %}
+
+												{% if data.dataType == '40' %}
+												<tr>
+													<td>{{ data.rank }}</td>
+													<td>{{ data.name }}</td>
+													<td>{{ data.teamName }}</td>
+													<td>{{ data.win }}</td>
+												</tr>
+												{% endif %}
+
+												{% endfor %}
+												</tbody>
+ 												
+ 												</table>
+												
+											</div>
+											<div class="tab-pane fade" id="assist-tab">
+												
+												<table class="table table-striped table-bordered table-hover">
+												<thead>
+												<tr>
+													<th>名次</th>
+													<th>姓名</th>
+													<th>球队</th>
+													<th>助攻</th>
+												</tr>
+												</thead>
+
+												<tbody>
+												{% for data in hupuData %}
+
+												{% if data.dataType == '50' %}
+												<tr>
+													<td>{{ data.rank }}</td>
+													<td>{{ data.name }}</td>
+													<td>{{ data.teamName }}</td>
+													<td>{{ data.win }}</td>
+												</tr>
+												{% endif %}
+
+												{% endfor %}
+												</tbody>
+ 												
+ 												</table>
+												
+											</div>
+										</div>
+										
+										<!-- end widget body text-->
+									</div>
+									<!-- end widget content -->
+									
+								</div>
+								<!-- end widget div -->
+								
+							</div>
+							<!-- end widget -->
+							</article>
+							</div>
+								
+								</article>
+
+								<article class="col-lg-7">
+
+									<!-- Widget ID (each widget will need unique ID)-->
+							<div class="jarviswidget jarviswidget-color-redLight " id="wid-id-3" data-widget-colorbutton="false"	data-widget-editbutton="false" data-widget-deletebutton="false">
+								<!-- widget options:
+									usage: <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false">
+									
+									data-widget-colorbutton="false"	
+									data-widget-editbutton="false"
+									data-widget-togglebutton="false"
+									data-widget-deletebutton="false"
+									data-widget-fullscreenbutton="false"
+									data-widget-custombutton="false"
+									data-widget-collapsed="true" 
+									data-widget-sortable="false"
+									
+								-->
+								<header>
+									<span class="widget-icon"> <i class="fa fa-comment "></i> </span>
+									<h2>湿乎乎的话题</h2>				
+									
+								</header>
+				
+								<!-- widget div-->
+								<div>
+									
+									<!-- widget edit box -->
+									<div class="jarviswidget-editbox">
+										<!-- This area used as dropdown edit box -->
+										<input class="form-control" type="text">
+										<span class="note"><i class="fa fa-check text-success"></i> Change title to update and save instantly!</span>
+										
+									</div>
+									<!-- end widget edit box -->
+									
+									<!-- widget content -->
+									<div class="widget-body custom-scroll" style="height:645px; overflow-y: scroll;">
+										
+										<table class="table table-striped table-forum">
+								<thead>
+									<tr>
+										<th colspan="2">话题</th>
+										<th class="text-center hidden-xs hidden-sm" style="width: 100px;">点亮</th>
+										<th class="text-center hidden-xs hidden-sm" style="width: 100px;">回复</th>
+										
+									</tr>
+								</thead>
+								<tbody>
+									{% for topic in hupuTopic %}
+									<!-- TR -->
+									<tr>
+										<td class="text-center" style="width: 40px;"><i class="fa fa-globe fa-2x text-muted"></i></td>
+										<td><h4><a href="{{ topic.titleLink }}" target="_blank">{{ topic.title }}</a></h4></td>
+										<td class="text-center hidden-xs hidden-sm"><a href="javascript:void(0);">{{ topic.up }}</a></td>
+										<td class="text-center hidden-xs hidden-sm"><a href="javascript:void(0);">{{ topic.reply }}</a></td>
+										
+									</tr>
+									<!-- end TR -->
+									{% endfor %}
+
+								</tbody>
+							</table>
+										
+									</div>
+									<!-- end widget content -->
+									
+								</div>
+								<!-- end widget div -->
+								
+							</div>
+							<!-- end widget -->
+								</article>
+
+								</div>
+						</article>
+					</div>
+
+					<!-- end row -->
+
+					<!-- row -->
+
+					<div class="row">
+
+						<article class="col-sm-12 col-md-12 col-lg-12">
+
+							<div class="well">
+
+								<h1 class="txt-color-blue">
+									<img src="/static/web/img/hupuNBA/sina.ico" style="width:16px;height:16px;"/>&nbsp;
+									<a href="http://sports.sina.com.cn/nba/" target="_blank" class="txt-color-blue" >新浪NBA</a>
+								</h1><br/><br/>
+								<blockquote>
+									<p>
+										最新NBA视频，新浪直播体育连播台提供24小时不间断体育直播节目，打造全方位的网络体育直播平台。
+									</p>
+								</blockquote>
+							</div>
+
+							<div class="row">
+
+							<article class="col-lg-12">
+
+							<!-- Widget ID (each widget will need unique ID)-->
+							<div class="jarviswidget jarviswidget-color-blue" id="wid-id-4" data-widget-colorbutton="false"	data-widget-editbutton="false" data-widget-deletebutton="false"> 
+								<!-- widget options:
+									usage: <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false">
+									
+									data-widget-colorbutton="false"	
+									data-widget-editbutton="false"
+									data-widget-togglebutton="false"
+									data-widget-deletebutton="false"
+									data-widget-fullscreenbutton="false"
+									data-widget-custombutton="false"
+									data-widget-collapsed="true" 
+									data-widget-sortable="false"
+									
+								-->
+								<header>
+									<span class="widget-icon"> <i class="fa fa-video-camera "></i> </span>
+									<h2> 直播台</h2>		
+											
+									<div class="widget-toolbar">
+										
+										
+										<div class="btn-group" data-toggle="buttons">
+									        <label class="btn btn-default btn-xs" id="sina-tv-play">
+									          <input type="radio" name="style-a1" > <i class="fa fa-play"></i>
+									        </label>
+									        <label class="btn btn-default btn-xs active" id="sina-tv-stop">
+									          <input type="radio" name="style-a2" > <i class="fa fa-stop"></i>
+									        </label>
+									    </div>
+									</div>
+								</header>
+				
+								<!-- widget div-->
+								<div>
+									
+									<!-- widget edit box -->
+									<div class="jarviswidget-editbox">
+										<!-- This area used as dropdown edit box -->
+										
+									</div>
+									<!-- end widget edit box -->
+									
+									<!-- widget content -->
+									<div class="widget-body" style="height: 400px" id="sina-tv-content">
+										
+										<h3 class="text-primary">新浪体育直播</h3>
+										<hr>
+										<dl>
+        									<dt>打开直播台</dt>
+       	 										<dd>点击右上角的
+       	 										<label class="btn btn-default btn-xs"><i class="fa fa-play"></i></label>按钮，打开直播台
+       	 										</dd>
+        									<dt>关闭直播台</dt>
+        										<dd>点击右上角的
+        										<label class="btn btn-default btn-xs"><i class="fa fa-stop"></i></label>按钮，关闭直播台
+        										</dd>
+      									</dl>
+										
+									</div>
+									<!-- end widget content -->
+									
+								</div>
+								<!-- end widget div -->
+								
+							</div>
+							<!-- end widget -->
+
+							<!-- Widget ID (each widget will need unique ID)-->
+							<div class="jarviswidget jarviswidget-color-blue" id="wid-id-11" data-widget-colorbutton="false"	data-widget-editbutton="false" data-widget-deletebutton="false">
+								<!-- widget options:
+									usage: <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false">
+									
+									data-widget-colorbutton="false"	
+									data-widget-editbutton="false"
+									data-widget-togglebutton="false"
+									data-widget-deletebutton="false"
+									data-widget-fullscreenbutton="false"
+									data-widget-custombutton="false"
+									data-widget-collapsed="true" 
+									data-widget-sortable="false"
+									
+								-->
+								<header>
+									<span class="widget-icon"> <i class="fa fa-film "></i> </span>
+									<h2>每日视频</h2>	
+									
+									<ul id="widget-tab-1" class="nav nav-tabs pull-right">
+				
+										<li class="active">
+				
+											<a data-toggle="tab" href="#videoTab1"> <i class="fa fa-lg fa-arrow-circle-o-down"></i> <span class="hidden-mobile hidden-tablet">推荐视频</span> </a>
+				
+										</li>
+
+										<li>
+											<a data-toggle="tab" href="#videoTab2"> <i class="fa fa-lg fa-arrow-circle-o-down"></i> <span class="hidden-mobile hidden-tablet">诸强赛事</span></a>
+										</li>
+				
+										<li>
+											<a data-toggle="tab" href="#videoTab3"> <i class="fa fa-lg fa-arrow-circle-o-down"></i> <span class="hidden-mobile hidden-tablet">官方最佳</span></a>
+										</li>
+
+										<li>
+											<a data-toggle="tab" href="#videoTab4"> <i class="fa fa-lg fa-arrow-circle-o-down"></i> <span class="hidden-mobile hidden-tablet">声色NBA</span></a>
+										</li>
+
+										<li>
+											<a data-toggle="tab" href="#videoTab5"> <i class="fa fa-lg fa-arrow-circle-o-down"></i> <span class="hidden-mobile hidden-tablet">赛事录播</span></a>
+										</li>
+				
+									</ul>	
+									
+								</header>
+				
+								<!-- widget div-->
+								<div>
+									
+									<!-- widget edit box -->
+									<div class="jarviswidget-editbox">
+										<!-- This area used as dropdown edit box -->
+										
+									</div>
+									<!-- end widget edit box -->
+									
+									<!-- widget content -->
+									<div class="widget-body no-padding custom-scroll" style="height:322px; overflow-y: scroll;">
+				
+										<!-- widget body text-->
+										
+										<div class="tab-content padding-10" >
+											<div class="tab-pane fade in active" id="videoTab1">
+												
+												<div class="superbox">
+													{% for video in sinaNBAVideo %}
+													{% if video.videoType == '0' %}
+													<div class="superbox-list">
+														<a href="{{ video.videoAddress }}" target="_blank" >
+														<img src="{{ video.coverAddress }}" data-img="/static/smartAdmin/img/superbox/superbox-full-1.jpg" alt="{{ video.videoName }}" title="{{video.videoName}}" class="superbox-img">
+														<font class="font-xs">{{ video.videoName }}</font>
+														</img>
+														</a>
+													</div>
+													{% endif %}
+													{% endfor %}
+													<div class="superbox-float"></div>
+												</div>
+												<!-- /SuperBox -->
+											</div>
+											<div class="tab-pane fade in" id="videoTab2">
+												
+												<div class="superbox">
+													{% for video in sinaNBAVideo %}
+													{% if video.videoType == '1' %}
+													<div class="superbox-list">
+														<a href="{{ video.videoAddress }}" target="_blank" >
+														<img src="{{ video.coverAddress }}" data-img="/static/smartAdmin/img/superbox/superbox-full-1.jpg" alt="{{ video.videoName }}" title="{{video.videoName}}" class="superbox-img">
+														<font class="font-xs">{{ video.videoName }}</font>
+														</img>
+														</a>
+													</div>
+													{% endif %}
+													{% endfor %}
+													<div class="superbox-float"></div>
+												</div>
+												<!-- /SuperBox -->
+											</div>
+											<div class="tab-pane fade in" id="videoTab3">
+												
+												<div class="superbox">
+													{% for video in sinaNBAVideo %}
+													{% if video.videoType == '2' %}
+													<div class="superbox-list">
+														<a href="{{ video.videoAddress }}" target="_blank" >
+														<img src="{{ video.coverAddress }}" data-img="/static/smartAdmin/img/superbox/superbox-full-1.jpg" alt="{{ video.videoName }}" title="{{video.videoName}}" class="superbox-img">
+														<font class="font-xs">{{ video.videoName }}</font>
+														</img>
+														</a>
+													</div>
+													{% endif %}
+													{% endfor %}
+													<div class="superbox-float"></div>
+												</div>
+												<!-- /SuperBox -->
+											</div>
+											<div class="tab-pane fade in" id="videoTab4">
+												
+												<div class="superbox">
+													{% for video in sinaNBAVideo %}
+													{% if video.videoType == '3' %}
+													<div class="superbox-list">
+														<a href="{{ video.videoAddress }}" target="_blank" >
+														<img src="{{ video.coverAddress }}" data-img="/static/smartAdmin/img/superbox/superbox-full-1.jpg" alt="{{ video.videoName }}" title="{{video.videoName}}" class="superbox-img">
+														<font class="font-xs">{{ video.videoName }}</font>
+														</img>
+														</a>
+													</div>
+													{% endif %}
+													{% endfor %}
+													<div class="superbox-float"></div>
+												</div>
+												<!-- /SuperBox -->
+											</div>
+											<div class="tab-pane fade in" id="videoTab5">
+												
+												<div class="superbox">
+													{% for video in sinaNBAVideo %}
+													{% if video.videoType == '4' %}
+													<div class="superbox-list">
+														<a href="{{ video.videoAddress }}" target="_blank" >
+														<img src="{{ video.coverAddress }}" data-img="/static/smartAdmin/img/superbox/superbox-full-1.jpg" alt="{{ video.videoName }}" title="{{video.videoName}}" class="superbox-img">
+														<font class="font-xs">{{ video.videoName }}</font>
+														</img>
+														</a>
+													</div>
+													{% endif %}
+													{% endfor %}
+													<div class="superbox-float"></div>
+												</div>
+												<!-- /SuperBox -->
+											</div>
+								
+										</div>
+										
+										<!-- end widget body text-->
+										
+									</div>
+									<!-- end widget content -->
+									
+								</div>
+								<!-- end widget div -->
+								
+							</div>
+							<!-- end widget -->
+
+							</article>
+
+						</div>
+
+
+						</article>
+
+						
+					</div>
+
+					<!-- end row -->
+
+				</section>
+				<!-- end widget grid -->
+
+			</div>
+			<!-- END MAIN CONTENT -->
+
+{% endblock %}
+
+{% block script %}
+
+<script src="/static/web/js/site/hupu.js"></script>
+
+{% endblock %}

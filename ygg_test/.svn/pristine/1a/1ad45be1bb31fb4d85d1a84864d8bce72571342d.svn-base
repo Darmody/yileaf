@@ -1,0 +1,10 @@
+body { 
+	padding-bottom: 70px; 
+	
+	margin: 0;
+  	font-family: Verdana,Microsoft YaHei, Helvetica, Arial, sans-serif;
+ 	font-size: 13px;
+ 	line-height: 18px;
+ 	color: #333333;
+ 	background-color: #ffffff;
+}

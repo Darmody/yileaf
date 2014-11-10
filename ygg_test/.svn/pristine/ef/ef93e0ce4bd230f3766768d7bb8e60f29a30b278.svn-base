@@ -1,0 +1,211 @@
+{% block doctype %}<!DOCTYPE html>{% endblock %}
+<html lang="en">
+	{% block head %}
+	<head>
+		<meta charset="utf-8" />
+		<title>磁铁</title>
+
+		<meta name="description" content="" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+		<!--basic styles-->
+
+		<link href="/static/ace/assets/css/bootstrap.min.css" rel="stylesheet" />
+		<link href="/static/ace/assets/css/bootstrap-responsive.min.css" rel="stylesheet" />
+ 		<link rel="stylesheet" href="/static/ace/assets/css/font-awesome.min.css" />
+		<!--[if IE 7]>
+		  <link rel="stylesheet" href="assets/css/font-awesome-ie7.min.css" />
+		<![endif]-->
+
+		<!--page specific plugin styles-->
+
+		<link rel="stylesheet" href="/static/ace/assets/css/jquery-ui-1.10.3.custom.min.css" />
+		<link rel="stylesheet" href="/static/ace/assets/css/jquery.gritter.css" />
+
+		<!--fonts-->
+
+		<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:400,300" />
+		<link href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+
+
+		<!--ace styles-->
+
+		<link rel="stylesheet" href="/static/ace/assets/css/ace.min.css" />
+		<link rel="stylesheet" href="/static/ace/assets/css/ace-responsive.min.css" />
+		<link rel="stylesheet" href="/static/ace/assets/css/ace-skins.min.css" />
+
+		{% block css %}{% endblock %}
+
+		<style type="text/css">
+			body {
+ 				margin: 0;
+  				font-family: Verdana,Microsoft YaHei, Helvetica, Arial, sans-serif;
+ 				font-size: 13px;
+ 				line-height: 18px;
+ 				color: #333333;
+ 				background-color: #ffffff;
+			}
+		</style> 
+
+		<!--[if lte IE 8]>
+		  <link rel="stylesheet" href="assets/css/ace-ie.min.css" />
+		<![endif]-->
+
+		<!--inline styles related to this page-->
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	</head>
+	{% endblock %}
+	<body>
+		
+		<div class="navbar ">
+		<div class="navbar">
+			<div class="navbar-inner btn-info" >
+				<ul class="nav ace-nav">
+						
+						<li class="btn-info">
+							
+							<a href="/hupunba">篮&nbsp;球</a>
+							
+						</li>
+						<li class="btn-info ">&nbsp;</li>
+						
+						
+				</ul><!--/.ace-nav-->
+			</div>
+		</div>	
+		<div class="navbar ">
+			<div class="navbar-inner" style="height:200px; background-color: #FFFFFF;">
+				<div class="container-fluid">
+				<div class="row-fluid">
+					<div class="span4">
+					</div>
+					<div class="span4">
+						<br/><br/><br/><br/><br/>
+						<center><h1 class="muted">网&nbsp;站&nbsp;标&nbsp;题&nbsp;及&nbsp;图&nbsp;标</h1></center>
+					</div>
+					<div class="span4">
+					</div>
+				</div>
+				</div>
+			</div>
+		</div>				
+		</div>
+		<hr/>
+			
+
+		<div class="space-18"></div>
+
+		<div class="main-container container-fluid">
+			<div class="row-fluid">
+				<div class="span1">
+				</div>
+				<div class="span6">		
+				
+				</div>
+				</div>
+			</div>
+			<div class="row-fluid" >
+				<div class="span1">
+					
+				</div>
+				<div class="span10">
+
+
+					<div class="row-fluid">
+						<div class="span12" >
+							<!--PAGE CONTENT BEGINS-->
+
+							{% block content %}
+							{% endblock %}
+						</div>
+						</div><!--/.span-->
+					</div><!--/.row-fluid-->
+
+		</div><!--/.main-container-->
+
+
+
+		<nav class="navbar navbar-default navbar-fixed-bottom" role="navigation">
+			<div class="row-fluid">
+				<div class="span12">
+				<div class="span4" />
+				
+				<div class="span4">
+					<div class="widget-body">
+												<div class="widget-main">
+													<form class="form-search" />
+														<input type="text" class="input-medium search-query" />
+														<button onclick="return false;" class="btn btn-purple btn-small">
+															Search
+															<i class="icon-search icon-on-right bigger-110"></i>
+														</button>
+													</form>
+												</div>
+											</div>
+				</div>
+				</div>
+			</div>
+
+		</nav>
+
+
+
+		
+
+
+		
+
+		<!--basic scripts-->
+
+		<!--[if !IE]>-->
+
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+		<!--<![endif]-->
+
+		<!--[if IE]>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<![endif]-->
+
+		<!--[if !IE]>-->
+
+		<script type="text/javascript">
+			window.jQuery || document.write("<script src='static/ace/assets/js/jquery-2.0.3.min.js'>"+"<"+"/script>");
+		</script>
+
+		<!--<![endif]-->
+
+		<!--[if IE]>
+<script type="text/javascript">
+ window.jQuery || document.write("<script src='assets/js/jquery-1.10.2.min.js'>"+"<"+"/script>");
+</script>
+<![endif]-->
+
+		<script type="text/javascript">
+			if("ontouchend" in document) document.write("<script src='/static/ace/assets/js/jquery.mobile.custom.min.js'>"+"<"+"/script>");
+		</script>
+		<script src="/static/ace/assets/js/bootstrap.min.js"></script>
+
+		<!--page specific plugin scripts-->
+
+		<!--site tree -->
+		<script src="/static/ace/assets/js/fuelux/data/fuelux.tree-sampledata.js"></script>
+		<script src="/static/ace/assets/js/fuelux/fuelux.tree.min.js"></script>
+
+		<!-- 拖拽实现 -->
+		<script src="/static/ace/assets/js/jquery-ui-1.10.3.custom.min.js"></script>
+
+		<script src="/static/ace/assets/js/jquery.gritter.min.js"></script>
+
+		<!--ace scripts-->
+
+		<script src="/static/ace/assets/js/ace-elements.min.js"></script>
+		<script src="/static/ace/assets/js/ace.min.js"></script>
+
+		<!--inline scripts related to this page-->
+		
+		{% block script %}{% endblock %}
+
+		<script src="/static/web/js/base.js"></script>
+	</body>
+</html>

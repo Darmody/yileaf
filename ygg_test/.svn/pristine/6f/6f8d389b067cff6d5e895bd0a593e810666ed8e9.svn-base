@@ -1,0 +1,93 @@
+from django.db import models
+
+from pygments.lexers import get_all_lexers
+from pygments.styles import get_all_styles
+from pygments.lexers import get_lexer_by_name
+from pygments.formatters.html import HtmlFormatter
+from pygments import highlight
+
+LEXERS = [item for item in get_all_lexers() if item[1]]
+LANGUAGE_CHOICES = sorted([(item[1][0], item[0]) for item in LEXERS])
+STYLE_CHOICES = sorted((item, item) for item in get_all_styles())
+
+# site
+
+#smzdm
+
+class site_smzdm_notice(models.Model):
+
+    create_time = models.DateTimeField(auto_now_add=True)
+    zdmLink = models.CharField(max_length=100)
+    zdmCoverLink = models.CharField(max_length=100)
+    zdmTitle = models.CharField(max_length=100)
+    buyLink = models.CharField(max_length=100)
+    zdmContent = models.CharField(max_length=100)
+
+#sina
+
+class site_sinaNBA_video(models.Model):
+
+    create_time = models.DateTimeField(auto_now_add=True)
+    coverAddress = models.CharField(max_length=100)
+    videoName = models.CharField(max_length=100)
+    videoAddress = models.CharField(max_length=100)
+    videoType = models.CharField(max_length=100)
+
+# hupu
+class site_hupu_today(models.Model):
+
+    create_time = models.DateTimeField(auto_now_add=True)
+    teamlogo1 = models.CharField(max_length=100)
+    teamlogo2 = models.CharField(max_length=100)
+    title = models.CharField(max_length=100)
+    titleLink = models.CharField(max_length=100)
+    alert = models.CharField(max_length=100)
+    alertLink = models.CharField(max_length=100)
+
+class site_hupu_topic(models.Model):
+
+    create_time = models.DateTimeField(auto_now_add=True)
+    title = models.CharField(max_length=100)
+    titleLink = models.CharField(max_length=100)
+    reply = models.CharField(max_length=100)
+    up = models.CharField(max_length=100)
+
+class site_hupu_data(models.Model):
+
+    create_time = models.DateTimeField(auto_now_add=True)
+    rank = models.CharField(max_length=10)
+    teamName = models.CharField(max_length=50)
+    name = models.CharField(max_length=50)
+    win = models.CharField(max_length=10)
+    lose = models.CharField(max_length=10)
+    streak = models.CharField(max_length=50)
+    difGames = models.CharField(max_length=50)
+    dataType = models.CharField(max_length=10)
+
+class REST(models.Model):
+
+    created = models.DateTimeField(auto_now_add=True)
+    title = models.CharField(max_length=100, blank=True, default='')
+    code = models.TextField()
+    linenos = models.BooleanField(default=False)
+    language = models.CharField(choices=LANGUAGE_CHOICES, default='python', max_length=100)
+    style = models.CharField(choices=STYLE_CHOICES, default='friendly', max_length=100)
+
+    owner = models.ForeignKey('auth.User', related_name='rests')
+    highlighted = models.TextField()
+
+    class Meta:
+        ordering = ('created', )
+
+    def save(self, *args, **kwargs):
+        """
+        Use the `pygments` library to create a highlighted HTML
+        representation of the code snippet.
+        """
+        lexer = get_lexer_by_name(self.language)
+        linenos = self.linenos and 'table' or False
+        options = self.title and {'title': self.title} or {}
+        formatter = HtmlFormatter(style=self.style, linenos=linenos,
+                              full=True, **options)
+        self.highlighted = highlight(self.code, lexer, formatter)
+        super(REST, self).save(*args, **kwargs)

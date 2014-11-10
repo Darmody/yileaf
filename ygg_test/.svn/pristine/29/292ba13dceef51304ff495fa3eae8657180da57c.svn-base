@@ -1,0 +1,70 @@
+# -*- coding:utf-8 -*-
+
+from scrapy.selector import Selector
+from scrapy.contrib.linkextractors.sgml import SgmlLinkExtractor
+from scrapy.contrib.spiders import CrawlSpider, Rule
+from scrapy.http import Request
+from ygg_scrapy.items import weiboItem
+
+class WeiboSpider(CrawlSpider):
+    name = 'weibo'
+    allowed_domains = ['weibo.com']
+    start_urls = [
+        '1003061266321801',
+        '1035051087770692',
+        '1005051816011541',
+        '1035051854283601',
+        '1006051656809190',
+        '1006051223762662',
+        '1035051212812142',
+        '1035051197161814',
+        '1035051192329374',
+        '1004061608574203',
+    ]
+
+    curUrl = None
+
+    def start_requests(self):
+
+
+
+        yield Request('http://weibo.com', cookies={
+            'UOR': 'login.sina.com.cn,weibo.com,login.sina.com.cn',
+            'SINAGLOBAL': '7615902565815.541.1403773359298',
+            'ULV': '1403773407751:1:1:1:7615902565815.541.1403773359298:',
+            'SUBP': '002A2c-gVlwEm1uAWxfgXELuuu1xVxBxAup3aQDiltPrsNejSUMTPDKuHY-u_1%3D',
+            'myuid': '2251883710',
+            'un': 'yuxiaowei34@sina.com',
+            'TC-V5-G0': '26e4f9c4bdd0eb9b061c93cca7474bf2',
+            'SUB': 'AURFqbvD6Tu5tE05lzhNUk94eL%2FzZ2FYwMohYrcNMGNom0sEFYnGVMFdA4a6sXKR049lvpT%2BMgjUrGvYH%2FGnFKUWItkSrVxYfApve7CH7gw3jEZ5btbtldEtiqD2k6aI%2BET32NX%2BvbaF7tTDbqDnlWw%3D',
+            '_s_tentry': 'login.sina.com.cn',
+            'Apache': '7615902565815.541.1403773359298',
+            'TC-Ugrow-G0': 'ce2acf40514c043495533a6ffca65ab9',
+            'appkey': '',
+            'login_sid_t': '42ed6886d246f0b15445fd6cdd08eab0',
+            'SUS': 'SID-5192812643-1403773402-XD-g3wk9-a9496849b38cb703afb044574c55280a',
+            'SUE': 'es%3D865c7c7a438b1e27ab38e9852102ce77%26ev%3Dv1%26es2%3D7bc92d9f38a69003f9a3848052d07712%26rs0%3DL7ufLudKAQe4s2lHXpl6z%252BWkUOzJhK%252B%252BwDHBj%252FZhVYj3AhEws6GpoBT7TvfaWc%252FzvEMup4JlFpOimzZpdK3Gz6b%252FvW2lQ%252BtGJJITagbmNt4CEDnuUvlWhVgNsBfeQpl9drhUBihxGdXPCRlsZcoqe5xR9tqKC61uN6hY7R5%252Ffxw%253D%26rv%3D0',
+            'SUP': 'cv%3D1%26bt%3D1403773402%26et%3D1403859802%26d%3Dc909%26i%3D280a%26us%3D1%26vf%3D0%26vt%3D0%26ac%3D2%26st%3D0%26uid%3D5192812643%26name%3Dyuxiaowei34%2540sina.com%26nick%3D%25E7%2594%25A8%25E6%2588%25B75192812643%26fmp%3D%26lcp%3D',
+            'ALF': '1435309402',
+            'SSOLoginState': '1403773402',
+            'wvr': '5',
+            'WBtopGlobal_register_version': 'ab49b31824b6dba1'
+        })
+
+        for url in self.start_urls:
+            self.curUrl = url
+            Request('http://weibo.com/p/' + url + '/weibo', callback=self.parse_item)
+
+    def parse_item(self, response):
+
+        items = []
+
+        item = weiboItem()
+
+        item['page_source'] = response.body
+
+        print self.curUrl
+
+        items.append(item)
+
+        return items

@@ -1,0 +1,42 @@
+# -*- coding:utf-8 -*-
+
+from scrapy.selector import Selector
+from scrapy.contrib.linkextractors.sgml import SgmlLinkExtractor
+from scrapy.contrib.spiders import CrawlSpider, Rule
+from scrapy.http import Request,FormRequest
+
+class WeiboSpider(CrawlSpider):
+    name = 'weibo'
+    allowed_domains = ['weibo.com']
+    start_urls = ['http://weibo.com/yaochen']
+
+    def start_requests(self):
+
+        headers = {
+            'Accept' : '*/*',
+            'Accept-Encoding': 'gzip, deflate',
+            'Accept-Language': 'zh-cn,zh;q=0.8,en-us;q=0.5,en;q=0.3',
+            'Connection': 'keep-alive',
+            'Cookie': 'UOR=login.sina.com.cn,weibo.com,login.sina.com.cn; SINAGLOBAL=2093598005344.8933.1403659739226; ULV=1403659739296:1:1:1:2093598005344.8933.1403659739226:; SUBP=002A2c-gVlwEm1uAWxfgXELuuu1xVxBxAAxjwy_RTSoIIc3H7E3YfOxuHY-u_E%3D; myuid=2251883710; un=471306909@qq.com; ALF=1435195696; wvr=5; SUS=SID-2251883710-1403659696-XD-4lqks-bf76c44ead4ede678daf0e22eef05d30; SUE=es%3D02052aff6e53844669f59047e5ef54b2%26ev%3Dv1%26es2%3D73107def6394c565b1ae6dc9d6129326%26rs0%3DxawUmW8plHOcJI4adRoQQn3UT78huE7vZaLMNPp%252F7gC1Nro2I97zNMszR5iRsTH87qrN9Mf%252Bkj197DlXcFDl0%252BobzofkCFYcZx0PfkAzrULZcCiHfwEr39ryOCer0nuBLp1KpKP3P%252FE0qU2JkEYmhs59dlSbIcKJgNqxa1xkBhw%253D%26rv%3D0; SUP=cv%3D1%26bt%3D1403659696%26et%3D1403746096%26d%3Dc909%26i%3D5d30%26us%3D1%26vf%3D0%26vt%3D0%26ac%3D2%26st%3D0%26uid%3D2251883710%26name%3D471306909%2540qq.com%26nick%3D%25E7%258B%25BC%25E5%259E%258B%25E4%25BA%258C%25E7%25BA%25A7%25E6%258C%2587%25E9%2592%2588%26fmp%3D%26lcp%3D2012-03-19%252010%253A42%253A57; SUB=AaXXp3AzAL0tN%2F3Z6tiWMy3xR%2BojBa0A%2Be3zRwA3%2F6p5Zd0fd8IDn12%2B%2FyE8bJIGWkZ4A2EMUlIH9Wb9oCeECL%2Fs94qpgiyyk4%2B%2Fhx%2BdOx8CwEZDpbnUl2N2ulVOVg5NxSIL4DVD4OnIuf91afOqjXo%3D; SSOLoginState=1403659696; _s_tentry=login.sina.com.cn; Apache=2093598005344.8933.1403659739226; BAYEUX_BROWSER=716gjhadoh0prwrhwtyrr0h1ee',
+            'Host': '3.120.web0.im.weibo.com',
+            'Referer': 'http://weibo.com/u/2251883710/home?leftnav=1&wvr=5',
+            'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:30.0) Gecko/20100101 Firefox/30.0'
+        }
+
+        for i, url in enumerate(self.start_urls):
+            yield FormRequest(url, meta={'cookiejar': i},
+                              headers=headers,
+                              callback=self.parse_item)#jump to login page
+
+    def parse_item(self, response):
+        sel = Selector(response)
+
+        resList = sel.xpath('//*')
+
+        items = []
+
+        for resItem in resList:
+
+            print resItem.xpath('//*').extract()
+
+        return items

@@ -1,0 +1,99 @@
+#coding=utf-8
+#-*- coding: UTF-8 -*-
+
+'''
+
+@author: caihuanyu
+'''
+
+from scrapy.spider import Spider
+from scrapy.selector import Selector
+from scrapy.contrib.loader.processor import Join
+from scrapy.http import FormRequest
+
+from ygg_scrapy.items import hupuTodayItem, hupuTopicItem, hupuDataItem
+
+from ygg_app.models import site_hupu_today, site_hupu_topic, site_hupu_data
+
+import urllib
+import urllib2
+import cookielib
+import base64
+import re
+import json
+import hashlib
+
+class weiBoSpider(Spider):
+    
+    name = "weibo"
+    allowed_domains = ["weibo.com"]        # weibo
+    start_urls = [
+        "http://weibo.com/yaochen"      # 姚晨
+    ]
+    
+    def parse(self, response):
+
+        cj = cookielib.LWPCookieJar()
+        cookie_support = urllib2.HTTPCookieProcessor(cj)
+        opener = urllib2.build_opener(cookie_support, urllib2.HTTPHandler)
+        urllib2.install_opener(opener)
+        postdata = {
+            'entry': 'weibo',
+            'gateway': '1',
+            'from': '',
+            'savestate': '7',
+            'userticket': '1',
+            'ssosimplelogin': '1',
+            'vsnf': '1',
+            'vsnval': '',
+            'su': '',
+            'service': 'miniblog',
+            'servertime': '',
+            'nonce': '',
+            'pwencode': 'wsse',
+            'sp': '',
+            'encoding': 'UTF-8',
+            'url': 'http://weibo.com/ajaxlogin.php?framelogin=1&callback=parent.sinaSSOController.feedBackUrlCallBack',
+            'returntype': 'META'
+        }
+
+        username = '471306909@qq.com'
+        pwd = 'CaiZiShan4'
+        url = 'http://login.sina.com.cn/sso/login.php?client=ssologin.js(v1.3.18)'
+        servertime, nonce = self.get_servertime()
+        global postdata
+        postdata['servertime'] = servertime
+        postdata['nonce'] = nonce
+        postdata['su'] = self.get_user(username)
+        postdata['sp'] = self.get_pwd(pwd, servertime, nonce)
+
+        return [FormRequest.from_response(response,
+                    formdata=postdata,
+                    callback=self.after_login)]
+
+    def after_login(self, response):
+
+        return
+
+    def get_servertime(self):
+        url = 'http://login.sina.com.cn/sso/prelogin.php?entry=weibo&callback=sinaSSOController.preloginCallBack&su=dW5kZWZpbmVk&client=ssologin.js(v1.3.18)&_=1329806375939'
+        data = urllib2.urlopen(url).read()
+        p = re.compile('\((.*)\)')
+
+        json_data = p.search(data).group(1)
+        data = json.loads(json_data)
+        servertime = str(data['servertime'])
+        nonce = data['nonce']
+        return servertime, nonce
+
+    def get_pwd(pwd, servertime, nonce):
+        pwd1 = hashlib.sha1(pwd).hexdigest()
+        pwd2 = hashlib.sha1(pwd1).hexdigest()
+        pwd3_ = pwd2 + servertime + nonce
+        pwd3 = hashlib.sha1(pwd3_).hexdigest()
+        return pwd3
+
+    def get_user(username):
+        username_ = urllib.quote(username)
+        username = base64.encodestring(username_)[:-1]
+        return username

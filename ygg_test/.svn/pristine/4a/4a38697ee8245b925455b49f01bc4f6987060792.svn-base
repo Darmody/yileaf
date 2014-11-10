@@ -1,0 +1,101 @@
+/*
+	取自虎扑篮球css代码
+*/
+.n1 {
+    background-position: 0px 0px;
+}
+.n2 {
+    background-position: -30px 0px;
+}
+.n3 {
+    background-position: -60px 0px;
+}
+.n4 {
+    background-position: -90px 0px;
+}
+.n5 {
+    background-position: -120px 0px;
+}
+.n6 {
+    background-position: -150px 0px;
+}
+.n7 {
+    background-position: -180px 0px;
+}
+.n8 {
+    background-position: -210px 0px;
+}
+.n9 {
+    background-position: -240px 0px;
+}
+.n10 {
+    background-position: -270px 0px;
+}
+.n11 {
+    background-position: -300px 0px;
+}
+.n12 {
+    background-position: -330px 0px;
+}
+.n13 {
+    background-position: -360px 0px;
+}
+.n14 {
+    background-position: -390px 0px;
+}
+.n15 {
+    background-position: -420px 0px;
+}
+.n16 {
+    background-position: -450px 0px;
+}
+.n17 {
+    background-position: -480px 0px;
+}
+.n18 {
+    background-position: -510px 0px;
+}
+.n19 {
+    background-position: -540px 0px;
+}
+.n20 {
+    background-position: -570px 0px;
+}
+.n21 {
+    background-position: -600px 0px;
+}
+.n22 {
+    background-position: -630px 0px;
+}
+.n23 {
+    background-position: -660px 0px;
+}
+.n24 {
+    background-position: -690px 0px;
+}
+.n25 {
+    background-position: -720px 0px;
+}
+.n26 {
+    background-position: -750px 0px;
+}
+.n27 {
+    background-position: -780px 0px;
+}
+.n28 {
+    background-position: -810px 0px;
+}
+.n29 {
+    background-position: -840px 0px;
+}
+.n30 {
+    background-position: -870px 0px;
+}
+
+.teamlogo {
+    background-image: url('../../img/hupuNBA/teamlogo_v2.gif');
+    background-repeat: no-repeat;
+    display: block;
+    width: 26px;
+    height: 18px;
+}

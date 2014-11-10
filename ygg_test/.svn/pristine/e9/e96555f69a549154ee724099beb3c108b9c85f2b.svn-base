@@ -1,0 +1,133 @@
+$(document).ready(function(){
+
+	var sina_switch = -1;
+
+	$('.sina-switch').change(function() {
+
+		sina_switch *= -1;
+
+		if(sina_switch == 1) {
+			
+			$('#sina-tv').attr('src', 'http://video.sina.com.cn/l/pl/sportstv/1684698.html');
+			$('#sina-tv').attr('srcdoc', '');
+
+		} else {
+			
+			$('#sina-tv').attr('src', '');
+			$('#sina-tv').attr('srcdoc', '<br/><br/><br/><center><img src="/static/web/img/hupuNBA/NBA.jpg" /></center>');		
+		}
+	});
+
+	$('.hupuTopicRefresh').click(function(){
+
+		$.ajax({
+
+        	type: "GET",
+       		url: "/api-auth/hupu/topic",
+        
+       		beforeSend: function() {
+
+       			$(".hupuTopicRefresh").html('<h5><i class="icon-spinner icon-spin blue"></i></h5>');
+       		},
+       		
+       		success: function(data) {
+
+       			$("#topicContent").html("");
+
+       			$(".hupuTopicRefresh").html('<a href="##" data-action="reload" class="hupuTopicRefresh">' +
+								'<i class="icon-refresh blue"></i>' +
+								'</a>');
+
+           		for(var i = 0; i < Number(data.count); i++) {
+
+           		var html = '<div class="profile-activity clearfix">' +
+										'<div>' +
+											'<img class="pull-left" src="/static/ace/assets/avatars/avatar4.png" />' +
+											'<div class="red">' +
+											'<b>' + data.results[i].reply + '</b>' +
+											'</div>' +
+											'<div class="text"><a href="' + data.results[i].titleLink + '" target="_blank">' + data.results[i].title + '</a></div>' +
+										'</div>' +
+									'</div>';
+
+					$("#topicContent").append(html);
+				}
+
+       		}
+		});
+	});
+
+	$('.hupuTodayRefresh').click(function(){
+
+		$.ajax({
+
+        	type: "GET",
+       		url: "/api-auth/hupu/today",
+        
+       		beforeSend: function() {
+
+       			$(".hupuTodayRefresh").html('<h5><i class="icon-spinner icon-spin blue"></i></h5>');
+       		},
+       		
+       		success: function(data) {
+
+       			$("#todayContent").html("");
+
+       			$(".hupuTodayRefresh").html('<a href="##" data-action="reload" class="hupuTodayRefresh">' +
+								'<i class="icon-refresh blue"></i>' +
+								'</a>');
+
+           		for(var i = 0; i < Number(data.count); i++) {
+
+           		var html = '<div class="widget-body">' +
+						'<div class="widget-main padding-8">' +
+						'	<div class="profile-feed">' +
+						'		<div class="profile-activity clearfix">' +
+						'			<div>' +
+						'				<div class="row-fluid">' +
+						'					<div class="span2">' +
+						'					<div class="pull-right">' +
+						'					<span class="' + data.results[i].teamlogo1 + '"></span>' +
+						'					</div>' +
+						'					</div>' +
+						'					<div class="span8">' +
+						'					<center>' +
+						'					<a class="user" href="' + data.results[i].titleLink + '" target="_blank"> ' + data.results[i].title + ' </a>' +
+						'					</center>' +
+						'					</div>' +
+						'					<div class="span2">' +
+						'					<div class="pull-left">' +
+						'					<span class="' + data.results[i].teamlogo2 + '"></span>' +
+						'					</div>' +
+						'					</div>' +
+						'				</div>	' +
+						'				<div class="time">' +
+						'					<center>' +
+						'					<i class="icon-time bigger-110"></i>' +
+						'					<a href="' + data.results[i].alertLink + '"" target="_blank">' +
+						'					' + data.results[i].alert + '' +
+						'					</a>' +
+						'					</center>' +
+						'				</div>' +
+						'			</div>' +
+						'		</div>' +
+
+								
+						'	</div>' +
+						'</div>' +
+						'</div>';
+
+					$("#todayContent").append(html);
+				}
+
+       		}
+		});
+	});
+});
+
+
+$('.hupu-scroll').slimScroll({
+		
+	height: '300px',
+	alwaysVisible : true
+});

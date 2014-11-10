@@ -1,0 +1,105 @@
+{% extends "v2/base.html" %}
+
+
+{% block content %}
+<!-- RIBBON -->
+			<div id="ribbon">
+
+				<span class="ribbon-button-alignment"> <span id="refresh" class="btn btn-ribbon" data-title="refresh"  rel="tooltip" data-placement="bottom" data-original-title="<i class='text-warning fa fa-warning'></i> 注意！这将会恢复界面的默认布局" data-html="true"><i class="fa fa-refresh"></i></span> </span>
+
+
+
+				<!-- breadcrumb -->
+				<ol class="breadcrumb">
+					<li>主面板</li>
+				</ol>
+				<!-- end breadcrumb -->
+
+				<!-- You can also add more buttons to the
+				ribbon for further usability
+
+				Example below:
+
+				<span class="ribbon-button-alignment pull-right">
+				<span id="search" class="btn btn-ribbon hidden-xs" data-title="search"><i class="fa-grid"></i> Change Grid</span>
+				<span id="add" class="btn btn-ribbon hidden-xs" data-title="add"><i class="fa-plus"></i> Add</span>
+				<span id="search" class="btn btn-ribbon" data-title="search"><i class="fa-search"></i> <span class="hidden-mobile">Search</span></span>
+				</span> -->
+
+			</div>
+			<!-- END RIBBON -->
+
+			<!-- MAIN CONTENT -->
+			<div id="content">
+
+				<div class="row">
+					<div class="col-xs-12 col-sm-7 col-md-7 col-lg-4">
+						<h1 class="page-title txt-color-blueDark"><i class="fa-fw fa fa-home"></i> 主面板 </h1>
+					</div>
+					<div class="col-xs-12 col-sm-5 col-md-5 col-lg-8">
+						<ul id="sparks" class="">
+							<li class="sparks-info">
+								<h5> 共有站点： <span class="txt-color-blue">1</span></h5>
+								
+							</li>
+							<li class="sparks-info">
+								<h5> 新增站点：<span class="txt-color-purple"><i class="fa fa-arrow-circle-up"></i>&nbsp;1</span></h5>
+								
+							</li>
+						</ul>
+					</div>
+				</div>
+				<!-- widget grid -->
+				<section id="widget-grid" class="">
+
+					<!-- row -->
+					<div class="row">
+						<article class="col-sm-12">
+							
+							<div class="well well-sm well-light">
+								<h3>资 讯</h3>
+								<hr>
+
+								<!-- SHORTCUT AREA : With large tiles (activated via clicking user name tag)
+								Note: These tiles are completely responsive,
+								you can add as many as you like
+								-->
+								<ul class="list-inline">
+									<li>
+										<a href="nba.html" class="jarvismetro-tile big-cubes bg-color-blue"> 
+											<span class="iconbox"> <i class="fa fa-dribbble fa-4x"></i> <span>篮球 </span> </span> 
+										</a>
+									</li>
+								</ul>
+								<!-- END -->
+							</div>
+
+						</article>
+					</div>
+
+					<!-- end row -->
+
+					<!-- row -->
+
+					<div class="row">
+
+						<article class="col-sm-12 col-md-12 col-lg-6">
+
+
+						</article>
+
+						<article class="col-sm-12 col-md-12 col-lg-6">
+
+						</article>
+
+					</div>
+
+					<!-- end row -->
+
+				</section>
+				<!-- end widget grid -->
+
+			</div>
+			<!-- END MAIN CONTENT -->
+
+{% endblock %}

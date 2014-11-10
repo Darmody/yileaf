@@ -1,0 +1,61 @@
+$(document).ready(function(){
+
+
+		$('#siteTree').ace_tree({
+			dataSource: treeDataSource ,
+			multiSelect:true,
+			loadingHTML:'<div class="tree-loading"><i class="icon-refresh icon-spin blue"></i></div>',
+			'open-icon' : 'icon-minus',
+			'close-icon' : 'icon-plus',
+			'selectable' : true,
+			'selected-icon' : 'icon-ok',
+			'unselected-icon' : 'icon-remove'
+		});
+
+        $('.site-menu').click(function(){
+
+            $('.page-content').html("{% include 'sina.html' %}");
+
+        });
+
+        $('#gritter-regular').on(ace.click_event, function(){
+					$.gritter.add({
+						title: '痛苦的活着和痛快的死去，选哪个？',
+						text: '科特·柯本在遗书中写道：与其苟延残喘，不如从容燃烧。',
+						image: '/static/ace/assets/avatars/zhihu.jpg',
+						sticky: false,
+						time: '',
+						class_name: 'gritter-light'//(!$('#gritter-light').get(0).checked ? 'gritter-light' : '')
+					});
+			
+					return false;
+				});
+
+
+        $('.registerBtn').click(function()//提交表单
+		{
+			$.ajax({
+			
+				url: '/register/?format=json', //提交给哪个执行
+				type: 'POST',
+				success: function(data){
+
+					alert(data);
+					alert(data.detail);
+				}
+			});
+		
+			return false; 
+		}); 
+
+});
+
+        //控制登录注册的界面跳转js
+function show_box(id) {
+			 
+	$('.login-box').hide();
+	$('.signup-box').hide();
+	$('.forgot-box').hide();
+
+	$('#'+id).show();
+}

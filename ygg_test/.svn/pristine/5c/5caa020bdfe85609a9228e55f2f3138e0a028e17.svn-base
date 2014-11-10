@@ -1,0 +1,44 @@
+# Scrapy settings for ygg_scrapy project
+#
+# For simplicity, this file contains only the most important settings by
+# default. All the other settings are documented here:
+#
+#     http://doc.scrapy.org/topics/settings.html
+#
+
+BOT_NAME = 'ygg_scrapy'
+# BOT_VERSION = '1.0'
+
+SPIDER_MODULES = ['ygg_scrapy.spiders']
+NEWSPIDER_MODULE = 'ygg_scrapy.spiders'
+# USER_AGENT = '%s/%s' % (BOT_NAME, BOT_VERSION)
+
+# Setting up django's project full path.
+import sys
+
+sys.path.insert(0, '/home/test/ygg/ygg_test/ygg_django')
+
+# Setting up django's settings module name.
+import os
+
+os.environ['DJANGO_SETTINGS_MODULE'] = 'ygg_django.settings'
+
+CONCURRENT_REQUESTS_PER_DOMAIN=20
+CONCURRENT_REQUESTS = 20
+
+ITEM_PIPELINES = {
+#   'scrapy_mongodb.MongoDBPipeline',
+    'ygg_scrapy.pipelines.HupuTodayPipeline': 1000,
+    'ygg_scrapy.pipelines.HupuTopicPipeline': 999,
+    'ygg_scrapy.pipelines.HupuDataPipeline': 998,
+    'ygg_scrapy.pipelines.SinaNBAVideoPipeline': 997,
+    'ygg_scrapy.pipelines.SmzdmNoticePipeline': 996,
+    'ygg_scrapy.pipelines.weiboScrapyPipeline': 995,
+    'ygg_scrapy.pipelines.zhidaoScrapyPipeline': 994,
+}
+# scrapy-mongodb
+
+#
+# MONGODB_URI = 'mongodb://127.0.0.1:27017'
+# MONGODB_DATABASE = 'ygg_test'
+# MONGODB_COLLECTION = 'test'

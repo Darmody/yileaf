@@ -1,0 +1,46 @@
+<div id="hupuTopic-refreshContent"></div>
+
+
+
+	<script type="text/javascript">
+
+		$.ajax({
+
+        	type: "GET",
+       		url: "/api-auth/hupu/topic",
+       		
+       		success: function(data) {
+
+       			$("#hupuTopic-refreshContent").html("");
+
+            $("#hupuTopic-refreshContent").html('<table class="table table-striped table-forum">' +
+                    '<thead>' +
+                    '<tr>' +
+                    '<th colspan="2">话题</th>' +
+                    '<th class="text-center hidden-xs hidden-sm" style="width: 100px;">点亮</th>' +
+                    '<th class="text-center hidden-xs hidden-sm" style="width: 100px;">回复</th>' +
+                    
+                    '</tr>' +
+                    '</thead>' +
+                    '<tbody>');
+
+           		for(var i = 0; i < Number(data.count); i++) {
+
+           		var html = '<!-- TR -->' +
+                    '<tr>' +
+                    '<td class="text-center" style="width: 40px;"><i class="fa fa-globe fa-2x text-muted"></i></td>' +
+                    '<td><h4><a href="' + data.results[i].titleLink + '" target="_blank">' + data.results[i].title + '</a></h4></td>' +
+                    '<td class="text-center hidden-xs hidden-sm"><a href="javascript:void(0);">' + data.results[i].up + '</a></td>' +
+                    '<td class="text-center hidden-xs hidden-sm"><a href="javascript:void(0);">' + data.results[i].reply + '</a></td>' +
+                    '</tr>' +
+                    '<!-- end TR -->';
+
+					$("#hupuTopic-refreshContent").append(html);
+
+          $("#hupuTopic-refreshContent").append('</tbody></table>');
+				}
+
+       		}
+		});
+
+	</script>

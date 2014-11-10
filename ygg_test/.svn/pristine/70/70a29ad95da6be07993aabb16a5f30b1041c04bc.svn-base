@@ -1,0 +1,158 @@
+#coding=utf-8
+#-*- coding: UTF-8 -*-
+
+# Define your item pipelines here
+#
+# Don't forget to add your pipeline to the ITEM_PIPELINES setting
+# See: http://doc.scrapy.org/topics/item-pipeline.html
+
+from ygg_app.models import site_hupu_today, site_hupu_topic, site_hupu_data, site_sinaNBA_video, site_smzdm_notice
+
+from ygg_scrapy.items import hupuTodayItem, hupuTopicItem, hupuDataItem, sinaNBAVideoItem, smzdmNoticeItem, weiboItem, zhidaoItem
+
+import re
+import datetime
+
+#什么值得买消息
+class SmzdmNoticePipeline(object):
+    def process_item(self, item, spider):
+        #判断传入的对象是否正确
+        if not isinstance(item, smzdmNoticeItem):
+
+            return item
+
+        notice = site_smzdm_notice(zdmLink=item['zdmLink'][0].decode('unicode_escape'),
+                                zdmCoverLink=item['zdmCoverLink'][0].decode('unicode_escape'),
+                                zdmTitle=item['zdmTitle'][0].decode('unicode_escape'),
+                                buyLink=item['buyLink'][0].decode('unicode_escape'),
+                                zdmContent=item['zdmContent'][0].decode('unicode_escape'))
+
+        notice.save()
+
+        return item
+
+
+#NBA当日赛况
+class HupuTodayPipeline(object):
+    def process_item(self, item, spider):
+        #判断传入的对象是否正确
+        if not isinstance(item, hupuTodayItem):
+
+            return item
+
+        today = site_hupu_today(teamlogo1=item['teamlogo1'][0].decode('unicode_escape'),
+                                teamlogo2=item['teamlogo1'][1].decode('unicode_escape'),
+                                title=item['title'][0].decode('unicode_escape'),
+                                titleLink=item['titleLink'][0].decode('unicode_escape'),
+                                alert=item['alert'][0].decode('unicode_escape'),
+                                alertLink=item['alertLink'][0].decode('unicode_escape'))
+
+        today.save()
+
+        return item
+
+#NBA湿乎乎的话题
+class HupuTopicPipeline(object):
+    def process_item(self, item, spider):
+        #判断传入的对象是否正确
+        if not isinstance(item, hupuTopicItem):
+
+            return item
+
+        result = re.findall(r'\d+', item['reply'][0].decode('unicode_escape'))
+
+
+        topic = site_hupu_topic(title=item['title'][0].decode('unicode_escape'),
+                                titleLink=item['titleLink'][0].decode('unicode_escape'),
+                                reply=result[1],
+                                up=result[0])
+
+        topic.save()
+
+        return item
+
+#NBA数据
+class HupuDataPipeline(object):
+    def process_item(self, item, spider):
+        #判断传入的对象是否正确
+        if not isinstance(item, hupuDataItem):
+
+            return item
+
+        data = site_hupu_data(teamName=item['teamName'][0].decode('unicode_escape'),
+                                rank=item['rank'][0].decode('unicode_escape'),
+                                win=item['win'][0].decode('unicode_escape'),
+                                difGames=item['difGames'][0].decode('unicode_escape'),
+                                streak=item['streak'][0].decode('unicode_escape'),
+                                dataType=item['dataType'],
+                                lose=item['lose'][0].decode('unicode_escape'),
+                                name=item['name'][0].decode('unicode_escape'))
+
+        data.save()
+
+        return item
+
+#NBA视频
+class SinaNBAVideoPipeline(object):
+    def process_item(self, item, spider):
+        #判断传入的对象是否正确
+        if not isinstance(item, sinaNBAVideoItem):
+
+            return item
+
+        data = site_sinaNBA_video(coverAddress=item['coverAddress'][0].decode('unicode_escape'),
+                                videoName=item['videoName'][0].decode('unicode_escape'),
+                                videoAddress=item['videoAddress'][0].decode('unicode_escape'),
+                                videoType=item['videoType'])
+
+        data.save()
+
+        return item
+
+#微博抓取
+class weiboScrapyPipeline(object):
+    def process_item(self, item, spider):
+        #判断传入的对象是否正确
+        if not isinstance(item, weiboItem):
+
+            return item
+
+
+
+        file = open('/home/yggftp/weibo/' + datetime.datetime.now().microsecond.__str__() + '_weibo.html', 'w')
+
+        file.write(item['page_source'])
+
+        file.close()
+
+        return item
+
+#百度知道抓取
+class zhidaoScrapyPipeline(object):
+    def process_item(self, item, spider):
+        #判断传入的对象是否正确
+        if not isinstance(item, zhidaoItem):
+
+            return item
+
+        question = ''
+        questioner = ''
+
+        if len(item['question']) > 0:
+
+            question = item['question'][0]
+
+        if len(item['questioner']) > 0:
+
+            questioner = item['questioner'][0]
+
+        file = open('/home/yggftp/zhidao/' +  '_zhidao.txt', 'a')
+
+        file.write('问题：' + question.decode('unicode_escape').encode('utf-8') + '\n')
+        file.write('提问者：' + questioner.decode('unicode_escape').encode('utf-8') + '\n')
+        file.write('---------------------------------------------------------------------\n')
+        file.write('---------------------------------------------------------------------\n')
+
+        file.close()
+
+        return item

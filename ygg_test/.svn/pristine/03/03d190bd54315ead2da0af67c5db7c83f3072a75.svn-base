@@ -1,0 +1,34 @@
+# -*- coding:utf-8 -*-
+
+from scrapy.selector import Selector
+from scrapy.contrib.linkextractors.sgml import SgmlLinkExtractor
+from scrapy.contrib.spiders import CrawlSpider, Rule
+from scrapy.http import Request
+from ygg_scrapy.items import zhidaoItem
+
+class WeiboSpider(CrawlSpider):
+    name = 'baiduzhidao'
+    allowed_domains = ['baidu.com']
+    start_urls = {
+        '迈腾'
+
+    }
+
+    def start_requests(self):
+
+        for url in self.start_urls:
+
+            yield Request('http://zhidao.baidu.com/index?device=mobile&word='+url, callback=self.parse_item)
+
+
+    def parse_item(self, response):
+
+        items = []
+
+        item = zhidaoItem()
+
+        item['page_source'] = response.body
+
+        items.append(item)
+
+        return items

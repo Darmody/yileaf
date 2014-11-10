@@ -1,0 +1,56 @@
+# -*- coding:utf-8 -*-
+
+from scrapy.selector import Selector
+from scrapy.contrib.linkextractors.sgml import SgmlLinkExtractor
+from scrapy.contrib.spiders import CrawlSpider, Rule
+from scrapy.http import Request
+from ygg_scrapy.items import zhidaoItem
+
+class WeiboSpider(CrawlSpider):
+    name = 'baiduzhidao'
+    allowed_domains = ['baidu.com']
+    start_urls = {
+        '迈腾'
+
+    }
+
+    def start_requests(self):
+
+        for url in self.start_urls:
+
+            yield Request('http://zhidao.baidu.com/index?device=mobile&word='+url, callback=self.parse_question_url)
+
+
+    def parse_question_url(self, response):
+
+        sel = Selector(response)
+
+        reslist = sel.xpath('//a[@class="a2"]')
+
+        for resItem in reslist:
+
+            url = 'http://zhidao.baidu.com' + \
+                  [s.encode('unicode_escape') for s in resItem.xpath('@href').extract()][0] + '&device=mobile'
+
+            # 解析数据
+            yield Request(url, callback=self.parse_item, meta = {'start_url': url})
+
+    def parse_item(self, response):
+
+        sel = Selector(response)
+
+        # print response.meta['start_url']
+
+        res = sel.xpath('//div[@class="ft p1"]')
+
+        items = []
+
+        item = zhidaoItem()
+
+        item['question'] = [s.encode('unicode_escape') for s in res.xpath('p[@class="b"]/text()').extract()]
+        item['questioner'] = [s.encode('unicode_escape') for s in res.xpath('p[3]/a/text()').extract()]
+
+        items.append(item)
+
+        return items
+

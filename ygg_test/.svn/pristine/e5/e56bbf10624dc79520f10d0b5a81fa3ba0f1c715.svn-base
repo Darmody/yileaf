@@ -1,0 +1,35 @@
+#coding=utf-8
+#-*- coding: UTF-8 -*-
+
+'''
+
+@author: caihuanyu
+'''
+
+from scrapy.spider import Spider
+from scrapy.selector import Selector
+from scrapy.contrib.loader.processor import Join
+
+from ygg_scrapy.items import hupuTodayItem, hupuTopicItem, hupuDataItem
+
+from ygg_app.models import site_hupu_today, site_hupu_topic, site_hupu_data
+
+class weiBoSpider(Spider):
+    
+    name = "weibo"
+    allowed_domains = ["weibo.com"]        # weibo
+    start_urls = [
+        "http://weibo.com/yaochen"      # 姚晨
+    ]
+    
+    def parse(self, response):
+        
+        sel = Selector(response)
+
+        items = []
+
+        # 赛况信息
+        reslist = sel.xpath('//*')
+
+        return items
+

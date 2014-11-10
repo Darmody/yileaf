@@ -1,0 +1,55 @@
+<div id="hupuToday-refreshContent"></div>
+
+
+
+	<script type="text/javascript">
+
+		$.ajax({
+
+        	type: "GET",
+       		url: "/api-auth/hupu/today",
+          
+          beforeSend: function(){
+          
+            $("#hupuToday-refreshContent").html('<center><a href="javascript:void(0);" class="btn bg-color-redLight txt-color-white"><i class="fa fa-dribbble fa-4x fa-spin"></i></a><div class="text-white font-md bg-color-redLight">加载中。。。</div></center>');
+          },
+
+       		success: function(data) {
+
+            if(Number(data.count) < 1) {
+
+              $('#hupuToday-refreshContent').html('<h2 class="alert alert-warning"> 今日无比赛。 </h2>');
+            }
+
+            var html = "";
+
+           		for(var i = 0; i < Number(data.count); i++) {
+
+           		  html += '<ul class="notification-body">' +
+           						'<li>' +
+           							'<span class="padding-10">' +
+           								'<ul class="list-inline text-center">' +
+           									'<li><i class="' + data.results[i].teamlogo1 + '"></i></li>' +
+           										'<li><a class="" href= "' + data.results[i].titleLink + '" target="_blank"> ' + data.results[i].title + ' </a></li>' +
+           											'<li><i class="' + data.results[i].teamlogo2 + '"></i></li>' +
+           								'</ul>' +
+           								'<ul class="list-inline text-center">' +
+           									'<li>' +
+           										'<h6 class="font-xs">' +
+           											'<a href="' + data.results[i].alertLink + '" class="pull-left" target="_blank">' +
+           												'<i class="fa fa-fw fa-clock-o "></i>' + data.results[i].alert +
+           											'</a>' +
+           										'</h6>' +
+           									'</li>' +
+           								'</ul>' +
+           							'</span>' +
+           						'</li>' +
+           					'</ul>';
+				      }
+
+              $("#hupuToday-refreshContent").html(html);
+
+       		}
+		});
+
+	</script>

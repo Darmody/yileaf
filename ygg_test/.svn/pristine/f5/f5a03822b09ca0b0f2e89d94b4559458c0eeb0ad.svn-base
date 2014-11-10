@@ -1,0 +1,32 @@
+#coding=utf-8
+#-*- coding: UTF-8 -*-
+
+'''
+
+@author: caihuanyu
+'''
+
+from scrapy.spider import Spider
+from scrapy.selector import Selector
+from scrapy.contrib.loader.processor import Join
+
+class sinaTodaySpider(Spider):
+    
+    name = "sinaVideo"
+    allowed_domains = ["sina.com.cn"]        # sina NBA
+    start_urls = [
+        "http://sports.sina.com.cn/nba/"      # 首页
+    ]
+    
+    def parse(self, response):
+        
+        sel = Selector(response)
+       
+        # 视频信息
+        reslist = sel.xpath('//div[@id="videoPageControlWrapper_1"]//div[@class="video"]')
+
+        print reslist
+
+        items = []
+
+        return items

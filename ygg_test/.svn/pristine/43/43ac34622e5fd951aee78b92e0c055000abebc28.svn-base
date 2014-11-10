@@ -1,0 +1,76 @@
+#coding=utf-8
+#-*- coding: UTF-8 -*-
+
+# Define your item pipelines here
+#
+# Don't forget to add your pipeline to the ITEM_PIPELINES setting
+# See: http://doc.scrapy.org/topics/item-pipeline.html
+
+from ygg_app.models import site_hupu_today, site_hupu_topic, site_hupu_data
+
+from ygg_scrapy.items import hupuTodayItem, hupuTopicItem, hupuDataItem
+
+import re
+
+#NBA当日赛况
+class HupuTodayPipeline(object):
+    def process_item(self, item, spider):
+        #判断传入的对象是否正确
+        if not isinstance(item, hupuTodayItem):
+
+            return item
+
+        today = site_hupu_today(teamlogo1=item['teamlogo1'][0].decode('unicode_escape'),
+                                teamlogo2=item['teamlogo1'][1].decode('unicode_escape'),
+                                title=item['title'][0].decode('unicode_escape'),
+                                titleLink=item['titleLink'][0].decode('unicode_escape'),
+                                alert=item['alert'][0].decode('unicode_escape'),
+                                alertLink=item['alertLink'][0].decode('unicode_escape'))
+
+        today.save()
+
+        return item
+
+#NBA湿乎乎的话题
+class HupuTopicPipeline(object):
+    def process_item(self, item, spider):
+        #判断传入的对象是否正确
+        if not isinstance(item, hupuTopicItem):
+
+            return item
+
+        # reply = item['reply'][0].decode('unicode_escape').split('亮')[0]
+        # up = item['reply'][0].decode('unicode_escape').split('亮')[1].split('人')[0]
+        result = re.search(r'\d+', item['reply'][0].decode('unicode_escape')).group()
+
+        print result
+
+        topic = site_hupu_topic(title=item['title'][0].decode('unicode_escape'),
+                                titleLink=item['titleLink'][0].decode('unicode_escape'),
+                                reply=result[0],
+                                up=result[1])
+
+        topic.save()
+
+        return item
+
+#NBA数据
+class HupuDataPipeline(object):
+    def process_item(self, item, spider):
+        #判断传入的对象是否正确
+        if not isinstance(item, hupuDataItem):
+
+            return item
+
+        data = site_hupu_data(teamName=item['teamName'][0].decode('unicode_escape'),
+                                rank=item['rank'][0].decode('unicode_escape'),
+                                win=item['win'][0].decode('unicode_escape'),
+                                difGames=item['difGames'][0].decode('unicode_escape'),
+                                streak=item['streak'][0].decode('unicode_escape'),
+                                dataType=item['dataType'],
+                                lose=item['lose'][0].decode('unicode_escape'),
+                                name=item['name'][0].decode('unicode_escape'))
+
+        data.save()
+
+        return item
